@@ -1,13 +1,13 @@
 class Match < ApplicationRecord
 
-    #can be reused to find existing, but also when we want to render
-    def self.filter_nils
+    #can be reused to find existing, but also when we want to render nils so that current user can fill in their resposne
+    def self.filter_nils(current_user)
         filtered_user2 = self.select { |entry| entry.user2_id == current_user.id && entry.user2_response == nil }
     end
 
 
     def self.find_existing_entry (current_user, matchee_id)
-        filtered_user2 = self.filter_nils
+        filtered_user2 = self.filter_nils(current_user)
         matched = filtered_user2.find { |entry| 
            entry.user1_id == matchee_id
         }
