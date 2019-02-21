@@ -35,17 +35,16 @@ class MatchesController < ApplicationController
     end 
 
     def check_existing_entries
-        #checks for existing entries, if an extry exists for that user, return true or json of that array of entries.
-       
+        #checks for existing entries, if an extry exists for that user, patch entry, if false, post entry
+
         if Match.filter_existing_entry(current_user, params[:matchee_id])
             filtered_entry = Match.filter_existing_entry(current_user, params[:matchee_id])
             filtered_entry.update(user2_response: params[:current_user_response])
         else
-            filtered_entry = nil
+            filtered_entry = Match.create(user1_id: current_user.id, user1_response: params[:current_user_response], user2_id: params[:matchee_id])
         end 
 
       
-         
         render json: filtered_entry
     end
 
