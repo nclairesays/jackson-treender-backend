@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
     # before_action :define_current_match
-    before_action :define_unresolved_matches
+    # before_action :define_unresolved_matches
 
 
     def create
@@ -27,16 +27,29 @@ class MatchesController < ApplicationController
         render json: current_match
     end
 
-
+  
     def define_unresolved_matches
         if Match.filter_nils(current_user) != []
             @unresolved_matches = Match.filter_nils(current_user)
         end 
     end 
 
-    def existing_matches
-        @exisiting_matches
+    def check_existing_entries
+        #checks for existing entries, if an extry exists for that user, return true or json of that array of entries.
+       
+        if Match.filter_existing_entry(current_user, params[:matchee_id])
+            filtered_entry = Match.filter_existing_entry(current_user, params[:matchee_id])
+            filtered_entry.update(user2_response: params[:current_user_response])
+        else
+            filtered_entry = nil
+        end 
+
+      
+         
+        render json: filtered_entry
     end
+
+    
 
     # def define_current_match
     #     # if current_user once we do auths??
@@ -53,7 +66,7 @@ class MatchesController < ApplicationController
     # end
 
     def match_params
-        params.permit( :user1_id, :user1_response, :user2_id, :user2_response)
+        params.permit( :user1_id, :user1_response, :user2_id, :user2_response, :current_user_response, :matchee_id)
     end 
 
 end
