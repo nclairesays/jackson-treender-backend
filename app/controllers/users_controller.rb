@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-    before_action :define_current_user
 
     def create
         user = User.create(user_params)
@@ -24,19 +23,8 @@ class UsersController < ApplicationController
         render json: current_user
     end
 
-    def define_current_user
-        if params[:id]
-            @current_user = User.find(params[:id])
-        else
-            @current_user = User.new
-        end
-    end
-
-    def current_user
-        @current_user
-    end
 
     def user_params
-        params.permit( :id, :name )
+        params.permit( :name )
     end
 end

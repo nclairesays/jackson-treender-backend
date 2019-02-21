@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_20_193340) do
+ActiveRecord::Schema.define(version: 2019_02_20_202431) do
 
   create_table "matches", force: :cascade do |t|
-    t.string "user1"
-    t.string "user1_response"
-    t.string "user2"
-    t.string "user2_response"
+    t.integer "user1_id"
+    t.integer "user2_id"
+    t.boolean "user1_response"
+    t.boolean "user2_response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
