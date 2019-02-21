@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::API
 
     def current_user
-        User.find(params[:user_id])
+        c=User.find(params[:current_user_id])
+        # binding.pry
     end
 
     # if params[:id]
@@ -9,4 +10,6 @@ class ApplicationController < ActionController::API
     # else
     #     @current_user = User.new
     # end
+
+   
 end

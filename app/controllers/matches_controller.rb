@@ -1,5 +1,7 @@
 class MatchesController < ApplicationController
-    before_action :define_current_match
+    # before_action :define_current_match
+    before_action :define_existing_matches
+
 
     def create
         match = Match.create(match_params)
@@ -7,7 +9,6 @@ class MatchesController < ApplicationController
     end
 
     def index
-        
         render json: Match.all
     end
 
@@ -26,20 +27,35 @@ class MatchesController < ApplicationController
         render json: current_match
     end
 
-    def define_current_match
-        if params[:id]
-            @current_match = Match.find(params[:id])
+
+    def define_existing_matches
+        if Match.filter_nils(current_user) != []
+            @existing_matches = Match.filter_nils(current_user)
         else
-            @current_match = Match.new
-        end
+            @existing_matches = nil
+        end 
+    end 
+
+    def existing_matches
+        @exisiting_matches
     end
 
-    def current_match
-        @current_match
-    end
+    # def define_current_match
+    #     # if current_user once we do auths??
+    #     if params[:user_id]
+    #         @current_match = Match.find(params[:id])
+            
+    #     else
+    #         @current_match = Match.new
+    #     end
+    # end
+
+    # def current_match
+    #     @current_match
+    # end
 
     def match_params
-        params.permit( :user_id, :user1_id, :user1_response, :user2_id, :user2_response)
+        params.permit( :user1_id, :user1_response, :user2_id, :user2_response)
     end 
 
 end
