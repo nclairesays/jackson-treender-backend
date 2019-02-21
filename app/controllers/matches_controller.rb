@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
     # before_action :define_current_match
-    before_action :define_existing_matches
+    before_action :define_unresolved_matches
 
 
     def create
@@ -28,11 +28,9 @@ class MatchesController < ApplicationController
     end
 
 
-    def define_existing_matches
+    def define_unresolved_matches
         if Match.filter_nils(current_user) != []
-            @existing_matches = Match.filter_nils(current_user)
-        else
-            @existing_matches = nil
+            @unresolved_matches = Match.filter_nils(current_user)
         end 
     end 
 

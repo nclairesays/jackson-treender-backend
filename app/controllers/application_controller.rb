@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
 
     def current_user
         c=User.find(params[:current_user_id])
-        # binding.pry
+        binding.pry
     end
 
     # if params[:id]
