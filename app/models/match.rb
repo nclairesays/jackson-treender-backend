@@ -13,7 +13,14 @@ class Match < ApplicationRecord
         }
     end
 
+    
+    
+
+    
  
+
+
+
 
 
     #this is to filter if they are both true, this will be sent to the chat
