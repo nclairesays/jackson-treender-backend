@@ -1,7 +1,7 @@
 class MatchesController < ApplicationController
     # before_action :define_current_match
     # before_action :define_unresolved_matches
-    skip_before_action :authenticate, only: [ :get_potential_matchees ]
+ 
 
 
     # def create
@@ -70,19 +70,19 @@ class MatchesController < ApplicationController
 
 
 
-    def get_potential_matchees
-        #if you cannot find an existing entry, then .. render ALL users, BUT the 
-        # if you can find existing entry, then render all BUT  those existing entries
-        # need to fix this logic
-        potential_matchees = User.all.select {|user| 
-            # where mapped entry is not current user
-            user
-        }
-        # binding.pry
+    # def get_potential_matchees
+    #     #if you cannot find an existing entry, then .. render ALL users, BUT the 
+    #     # if you can find existing entry, then render all BUT  those existing entries
+    #     # need to fix this logic
+    #     random = User.all.
+    #         # where mapped entry is not current user
+    #         user
+    #     }
+    #     # binding.pry
        
-        render json: potential_matchees
+    #     render json: potential_matchees
 
-    end
+    # end
 
   
     def match_params

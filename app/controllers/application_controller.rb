@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
         JWT.decode(token, 'jackson') # check on this...
     end
 
-    def current_user     
+    def current_user   
         begin 
             method, token = request.headers['Authorization'].split(' ')
             payload, header = decode_token(token)

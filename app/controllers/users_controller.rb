@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     before_action :define_current_user
-    skip_before_action :authenticate, only: [ :create, :index, :update ]
+    skip_before_action :authenticate, only: [ :create, :index, :update, :get_potential_matchees ]
+    
 
     def create
         user = User.create(user_params)
@@ -36,6 +37,12 @@ class UsersController < ApplicationController
     
     def current_user
         @current_user
+    end
+
+
+    def get_potential_matchees
+        potential_matchees = User.get_potentials(current_user)
+        render json: potential_matchees
     end
 
     def user_params

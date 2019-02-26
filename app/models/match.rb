@@ -14,8 +14,22 @@ class Match < ApplicationRecord
     end
 
     
-    
+    def self.find_potential_matchees(current_user)
+        filtered = User.all.select {|user| 
+            # where mapped entry is not current user
+            user.id != current_user.id 
+            &&
+            current_user.id == Match.select {|entry| entry.user1.id}
+            
+        }
+    end
 
+
+    # user1_id && user1_response == nil
+                     
+            # where ! (current_user = user1_id && user2_id = user.id)
+            # current_user.id == user1_id && user1_response == nil
+            # Match.
     
  
 
