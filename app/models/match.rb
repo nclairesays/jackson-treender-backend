@@ -1,4 +1,7 @@
 class Match < ApplicationRecord
+    def token
+        JWT.encode({ user_id: self.id }, 'jackson')
+    end
 
     #can be reused to find existing, but also when we want to render nils so that current user can fill in their resposne
     def self.filter_nils(current_user)
@@ -14,23 +17,8 @@ class Match < ApplicationRecord
     end
 
     
-    def self.find_potential_matchees(current_user)
-        filtered = User.all.select {|user| 
-            # where mapped entry is not current user
-            user.id != current_user.id 
-            &&
-            current_user.id == Match.select {|entry| entry.user1.id}
-            
-        }
-    end
 
 
-    # user1_id && user1_response == nil
-                     
-            # where ! (current_user = user1_id && user2_id = user.id)
-            # current_user.id == user1_id && user1_response == nil
-            # Match.
-    
  
 
 

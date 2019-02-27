@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :define_current_user
+    # before_action :define_current_user
     skip_before_action :authenticate, only: [ :create, :index, :update, :get_potential_matchees ]
     
 
@@ -27,20 +27,8 @@ class UsersController < ApplicationController
     end
 
 
-    def define_current_user
-        if params[:id]
-            @current_user = User.find(params[:id])
-        else
-            @current_user = User.new
-        end
-    end
-    
-    def current_user
-        @current_user
-    end
-
-
     def get_potential_matchees
+        # binding.pry
         potential_matchees = User.get_potentials(current_user)
         render json: potential_matchees
     end

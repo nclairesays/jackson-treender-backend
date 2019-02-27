@@ -1,33 +1,5 @@
 class MatchesController < ApplicationController
-    # before_action :define_current_match
-    # before_action :define_unresolved_matches
- 
-
-
-    # def create
-    #     match = Match.create(match_params)
-    #     render json: match
-    # end
-
-    # def define_current_match
-    #     # if current_user once we do auths??
-    #     if params[:user_id]
-    #         @current_match = Match.find(params[:id])
-            
-    #     else
-    #         @current_match = Match.new
-    #     end
-    # end
-
-    # def current_match
-    #     @current_match
-    # end
-
-    # def update
-    #     current_match.update(match_params)
-    #     render json: current_match
-    # end
-
+    skip_before_action :authenticate, only: [ :check_for_existing_entry ]
 
     def index
         render json: Match.all
@@ -51,6 +23,9 @@ class MatchesController < ApplicationController
 
     def check_for_existing_entry
         #checks for existing entries, if an extry exists for that user, update entry, if false, create entry
+        # current_user = params[:current_user]
+       
+        binding.pry
   
         if Match.find_existing_entry(current_user, params[:matchee_id])
             filtered_entry = Match.find_existing_entry(current_user, params[:matchee_id])
@@ -86,7 +61,7 @@ class MatchesController < ApplicationController
 
   
     def match_params
-        params.permit( :current_user_response, :matchee_id )
+        params.permit( :current_user_response, :matchee_id, :current_user )
     end 
 
 end
