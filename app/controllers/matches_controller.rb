@@ -25,7 +25,7 @@ class MatchesController < ApplicationController
         #checks for existing entries, if an extry exists for that user, update entry, if false, create entry
         # current_user = params[:current_user]
        
-        binding.pry
+        # binding.pry
   
         if Match.find_existing_entry(current_user, params[:matchee_id])
             filtered_entry = Match.find_existing_entry(current_user, params[:matchee_id])

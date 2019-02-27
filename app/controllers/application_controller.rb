@@ -7,13 +7,17 @@ class ApplicationController < ActionController::API
     end
 
     def current_user   
-        # User.find(46)
+        # User.find(46) 
+        # binding.pry
+       
         begin 
+            
             method, token = request.headers['Authorization'].split(' ')
             payload, header = decode_token(token)
             User.find(payload["user_id"])
-            binding.pry
+           
         rescue 
+            # binding.pry
             nil
         end
     end
