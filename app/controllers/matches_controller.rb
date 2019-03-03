@@ -22,11 +22,8 @@ class MatchesController < ApplicationController
     end 
 
     def check_for_existing_entry
-        #checks for existing entries, if an extry exists for that user, update entry, if false, create entry
-        # current_user = params[:current_user]
        
         # binding.pry
-  
         if Match.find_existing_entry(current_user, params[:matchee_id])
             filtered_entry = Match.find_existing_entry(current_user, params[:matchee_id])
             filtered_entry.update(user2_response: params[:current_user_response])
@@ -38,26 +35,12 @@ class MatchesController < ApplicationController
         render json: filtered_entry
     end
 
-    def user_matches
-        matches = Match.filter_matches(current_user)
+    def successful_matches
+        matches = Match.filter_matches(current_user)           
         render json: matches
     end
 
 
-
-    # def get_potential_matchees
-    #     #if you cannot find an existing entry, then .. render ALL users, BUT the 
-    #     # if you can find existing entry, then render all BUT  those existing entries
-    #     # need to fix this logic
-    #     random = User.all.
-    #         # where mapped entry is not current user
-    #         user
-    #     }
-    #     # binding.pry
-       
-    #     render json: potential_matchees
-
-    # end
 
   
     def match_params

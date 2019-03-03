@@ -27,11 +27,23 @@ class Match < ApplicationRecord
 
     #this is to filter if they are both true, this will be sent to the chat
     def self.filter_matches (current_user) 
+        users = []
+
         filtered_user = Match.all.select { |entry| entry.user1_id == current_user.id || entry.user2_id == current_user.id} 
 
         matched = filtered_user.select { |entry| 
             entry.user1_response === true && entry.user2_response === true
         }
+
+        matched.map{ |match|
+            if match.user1_id != current_user.id
+                users << User.find(match.user1_id)
+            else 
+                users << User.find(match.user2_id)
+            end
+        }
+        return users
+        
     end
 
 

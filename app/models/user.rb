@@ -6,6 +6,7 @@ class User < ApplicationRecord
     end
 
     def self.get_potentials(current_user)
+        # binding.pry
         potentials = self.all.sample(10).select{ |user| user != current_user}
     end
 end

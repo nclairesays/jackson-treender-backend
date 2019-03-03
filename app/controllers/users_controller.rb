@@ -33,7 +33,12 @@ class UsersController < ApplicationController
         render json: potential_matchees
     end
 
+    def get_matchee_info 
+        matchee = User.find(params[:matchee_id])
+        render json: matchee 
+    end
+
     def user_params
-        params.permit( :name, :email, :password, :bio, :gender, :birthday, :image )
+        params.permit( :name, :email, :password, :bio, :gender, :birthday, :image, :matchee_id )
     end
 end
