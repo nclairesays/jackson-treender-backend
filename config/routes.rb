@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post '/matches/check', to: 'matches#check_for_existing_entry'
   get '/successful_matches', to: 'matches#successful_matches'
   get '/get_potential_matchees', to: 'users#get_potential_matchees'
-  get '/get_matchee_info', to: 'users#get_matchee_info'
+  get '/find_all_match_entries', to: 'users#find_match_entries'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

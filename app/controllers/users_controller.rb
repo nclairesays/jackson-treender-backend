@@ -38,7 +38,12 @@ class UsersController < ApplicationController
         render json: matchee 
     end
 
+    def find_all_match_entries
+        matchees = User.find_match_entries(current_user)
+        render json: matchees
+    end
+
     def user_params
-        params.permit( :name, :email, :password, :bio, :gender, :birthday, :image, :matchee_id )
+        params.permit( :name, :email, :password, :bio, :gender, :age, :birthday, :image, :matchee_id )
     end
 end
