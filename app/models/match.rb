@@ -18,13 +18,6 @@ class Match < ApplicationRecord
 
     
 
-
- 
-
-
-
-
-
     #this is to filter if they are both true, this will be sent to the chat
     def self.filter_matches (current_user) 
         users = []
@@ -44,6 +37,30 @@ class Match < ApplicationRecord
         }
         return users
         
+    end
+
+
+    def self.get_potentials(current_user)
+
+        already_swiped_ids = []
+
+        swiped_entries = self.all.select{|match| match.user1_id == current_user.id || match.user2_id == current_user.id}
+        swiped_entries.map{ |e| 
+            if e.user1_id == current_user.id
+                already_swiped_ids << e.user2_id
+            elsif e.user2_id == current_user.id
+                already_swiped_ids << e.user1_id
+            else
+                nil
+            end
+        }
+
+        potentials = User.all.reject { |user|
+            already_swiped_ids.include?(user.id) || user.id == current_user.id
+        }
+
+        potentials.sample(10)
+
     end
 
 

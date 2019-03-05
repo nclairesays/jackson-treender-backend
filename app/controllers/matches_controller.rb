@@ -42,6 +42,11 @@ class MatchesController < ApplicationController
 
 
 
+    def get_potential_matchees
+        # binding.pry
+        potential_matchees = Match.get_potentials(current_user)
+        render json: potential_matchees
+    end
   
     def match_params
         params.permit( :current_user_response, :matchee_id, :current_user )
