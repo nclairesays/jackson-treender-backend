@@ -3,26 +3,30 @@ class User < ApplicationRecord
 
     def token
         JWT.encode({ user_id: self.id }, 'jackson')
-    end  
-    
-    def self.find_match_entries(current_user)
-        Match.select{|match|
-            match.user1_id == current_user.id || match.user2_id == current_user.id
-        }
     end
 
     def self.get_potentials(current_user)
-       
-        existing_entries = self.find_match_entries(current_user) # exist.. 7 with entries
-    
-        potentials = self.all.sample(10).select{ |user| 
 
-            binding.pry
-            existing_entries.select{|entry|  user.id != entry.user2_id }
-            # existing_entries.select{|entry| user.id != entry.user1_id || user.id != entry.user2_id }
+        already_swiped_ids = []
+
+        swiped_entries = Match.all.select{|match| match.user1_id == current_user.id || match.user2_id == current_user.id}
+        swiped_entries.map{ |e| 
+            if e.user1_id == current_user.id
+                already_swiped_ids << e.user2_id
+            elsif e.user2_id == current_user.id
+                already_swiped_ids << e.user1_id
+            else
+                nil
+            end
         }
 
-        
-    end
-end
+        potentials = self.all.reject { |user|
+            already_swiped_ids.include?(user.id) || user.id == current_user.id
+        }
 
+        potentials.sample(10)
+
+
+    end
+    
+end
