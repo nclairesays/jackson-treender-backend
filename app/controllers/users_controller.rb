@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     # before_action :define_current_user
-    skip_before_action :authenticate, only: [ :create, :update, :get_potential_matchees ]
+    skip_before_action :authenticate, only: [ :create ]
     
 
     def create
