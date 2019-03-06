@@ -25,10 +25,10 @@ class MatchesController < ApplicationController
         if Match.find_existing_entry(current_user, params[:matchee_id])
             filtered_entry = Match.find_existing_entry(current_user, params[:matchee_id])
             filtered_entry.update(user2_response: params[:current_user_response])
-        elsif !Match.find_completed_entries(current_user, params[:matchee_id])
-            filtered_entry = Match.create(user1_id: current_user.id, user1_response: params[:current_user_response], user2_id: params[:matchee_id])
+        elsif Match.find_completed_entries(current_user, params[:matchee_id]) == true
+            filtered_entry = "YOU ALREADY SWIPED ON #{User.find(params[:matchee_id]).name}"
         else
-            filtered_entry = "YOU ALREADY SWIPED ON #{User.find(params[:matchee_id]).name}" 
+            filtered_entry = Match.create(user1_id: current_user.id, user1_response: params[:current_user_response], user2_id: params[:matchee_id])
         end 
         render json: filtered_entry
     end
