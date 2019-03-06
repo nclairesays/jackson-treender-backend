@@ -48,7 +48,7 @@ class Match < ApplicationRecord
         swiped_entries.map{ |e| 
             if e.user1_id == current_user.id
                 already_swiped_ids << e.user2_id
-            elsif e.user2_id == current_user.id
+            elsif e.user2_id == current_user.id && e.user2_response != nil
                 already_swiped_ids << e.user1_id
             else
                 nil

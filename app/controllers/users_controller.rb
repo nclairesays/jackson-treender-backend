@@ -13,7 +13,8 @@ class UsersController < ApplicationController
     end
 
     def show
-        render json: current_user
+        user = User.find(params[:id])
+        render json: user
     end
 
     def update
@@ -27,11 +28,6 @@ class UsersController < ApplicationController
     end
 
 
-    def get_potential_matchees
-        # binding.pry
-        potential_matchees = User.get_potentials(current_user)
-        render json: potential_matchees
-    end
 
     def get_matchee_info 
         matchee = User.find(params[:matchee_id])
