@@ -17,12 +17,11 @@ class Match < ApplicationRecord
     end
 
     
-
+    # if this returns true, then do not do anything with the params
     def self.find_completed_entries(current_user, matchee_id)
         q = self.any?{|entry| (entry.user2_id == current_user.id && entry.user1_id == matchee_id && entry.user2_response != nil)} ||
         self.any?{|entry| (entry.user1_id == current_user.id && entry.user2_id == matchee_id && entry.user2_response != nil)}
      
-        binding.pry
         
     end
 
