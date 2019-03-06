@@ -18,11 +18,13 @@ class Match < ApplicationRecord
 
     
 
-# def self.find_completed_entries(current_user, matchee_id)
-#     self.any? {|entry|
-#         (entry.user2_id == current_user.id && entry.user1_id == matchee_id && entry.user2_response != nil)
-#     }
-# end
+    def self.find_completed_entries(current_user, matchee_id)
+        q = self.any?{|entry| (entry.user2_id == current_user.id && entry.user1_id == matchee_id && entry.user2_response != nil)} ||
+        self.any?{|entry| (entry.user1_id == current_user.id && entry.user2_id == matchee_id && entry.user2_response != nil)}
+     
+        binding.pry
+        
+    end
 
     #this is to filter if they are both true, this will be sent to the chat
     def self.filter_matches (current_user) 

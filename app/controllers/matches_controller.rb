@@ -25,12 +25,11 @@ class MatchesController < ApplicationController
        
         # binding.pry
         if Match.find_existing_entry(current_user, params[:matchee_id])
-            # binding.pry
             filtered_entry = Match.find_existing_entry(current_user, params[:matchee_id])
             filtered_entry.update(user2_response: params[:current_user_response])
+        elsif !Match.find_completed_entries(current_user, params[:matchee_id])
+            filtered_entry = "YOU ALREADY SWIPED ON #{User.find(params[:matchee_id]).name}" 
         else
-            #make sure to include a conditinoal where you cannot be rematched twice if both slots are filled (Front end)
-            # binding.pry
             filtered_entry = Match.create(user1_id: current_user.id, user1_response: params[:current_user_response], user2_id: params[:matchee_id])
         end 
 
