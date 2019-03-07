@@ -93,7 +93,7 @@ class Match < ApplicationRecord
             already_swiped_ids.include?(user.id) || user.id == current_user.id
         }
 
-        potentials.sample(5)
+        potentials.sample(10)
 
     end
 
